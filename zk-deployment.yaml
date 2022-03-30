@@ -1,10 +1,13 @@
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: zk-0
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: zk
   template:
     metadata:
       labels:
@@ -14,21 +17,17 @@ spec:
       hostname: zk-0
       volumes:
         - name: zk-data
-          hostPath: 
-            path: /data/zk-cluster/zk-data-0
+          emptyDir: {}
         - name: zk-logs
-          hostPath: 
-            path: /data/zk-cluster/zk-logs-0
+          emptyDir: {}
       containers:
       - name: zk-0
-        image: zookeeper
+        image: docker.io/zookeeper:3.8.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: zk-data
-          readOnly: false
           mountPath: "/data/zk-data"
         - name: zk-logs
-          readOnly: false
           mountPath: "/data/zk-logs"
         ports:
         - containerPort: 2181
@@ -50,11 +49,14 @@ spec:
 
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: zk-1
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: zk
   template:
     metadata:
       labels:
@@ -64,21 +66,17 @@ spec:
       hostname: zk-1
       volumes:
         - name: zk-data
-          hostPath: 
-            path: /data/zk-cluster/zk-data-1
+          emptyDir: {}
         - name: zk-logs
-          hostPath: 
-            path: /data/zk-cluster/zk-logs-1
+          emptyDir: {}
       containers:
       - name: zk-1
-        image: zookeeper
+        image: docker.io/zookeeper:3.8.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: zk-data
-          readOnly: false
           mountPath: "/data/zk-data"
         - name: zk-logs
-          readOnly: false
           mountPath: "/data/zk-logs"
         ports:
         - containerPort: 2181
@@ -100,11 +98,14 @@ spec:
 
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: zk-2
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: zk
   template:
     metadata:
       labels:
@@ -114,21 +115,17 @@ spec:
       hostname: zk-2
       volumes:
         - name: zk-data
-          hostPath: 
-            path: /data/zk-cluster/zk-data-2
+          emptyDir: {}
         - name: zk-logs
-          hostPath: 
-            path: /data/zk-cluster/zk-logs-2
+          emptyDir: {}
       containers:
       - name: zk-2
-        image: zookeeper
+        image: docker.io/zookeeper:3.8.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: zk-data
-          readOnly: false
           mountPath: "/data/zk-data"
         - name: zk-logs
-          readOnly: false
           mountPath: "/data/zk-logs"
         ports:
         - containerPort: 2181
